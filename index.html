@@ -1,26 +1,98 @@
 <html>
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-yAYSLJjzniZh9Kau9E1v1ma5CzvyHF8fPK/xUpaRx1XTH9r60WxzDivvHG3xm6Hn" crossorigin="anonymous">
+    <style>
+        img.thumbnail { height: 120px; }
+        .top-16 { margin-top: 16px; }
+    </style>
+    <script>
+        (function(){
+            angular.module('spemmons',[]).controller('BodyController',['$scope','$window',function($scope,$window){
+                $scope.setSection = function(code) { $scope.currentSection = code; };
+
+                $scope.currentSection   = 'home';
+                $scope.allSections  = [
+                    {code: 'home',      label: 'Home'},
+                    {code: 'examples',  label: 'Examples'},
+                    {code: 'opinions',  label: 'Opinions'},
+                    {code: 'history',   label: 'History'}
+                ];
+            }]);
+        })();
+    </script>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Steve Emmons</a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Examples</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Opinions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-        </ul>
+<body ng-app="spemmons" ng-controller="BodyController">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Steve Emmons</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item" ng-class="{'active': currentSection == section.code}" ng-repeat="section in allSections">
+                        <a class="nav-link" href="#" ng-click="setSection(section.code)">{{ section.label }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" ng-show="currentSection == 'home'">
+        <h1>Welcome!</h1>
+        <p class="lead">This is the personal web page for <a href="mailto:website@spemmons.com">Steve Emmons, Ph.D.</a></p>
+        <p>Thank you for visiting!</p>
+        <p>I have organized the site into three basic sections:</p>
+        <div class="card text-white bg-success mb-3" ng-click="setSection('examples')">
+            <div class="card-header">Examples</div>
+            <div class="card-body">
+                <h4 class="card-title">Examples of Products / Services</h4>
+                <p class="card-text">The products and services shown are areas of my expertise and interest.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-warning mb-3" ng-click="setSection('opinions')">
+            <div class="card-header">Opinions</div>
+            <div class="card-body">
+                <h4 class="card-title">Opinions on Professional Topics</h4>
+                <p class="card-text">The opinions expressed are my own view on how best to create and deliver products and services.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-danger mb-3" ng-click="setSection('history')">
+            <div class="card-header">History</div>
+            <div class="card-body">
+                <h4 class="card-title">History of Professional Activities</h4>
+                <p class="card-text">This section lists my professional background and highlights accomplishments.</p>
+            </div>
+        </div>
     </div>
-</nav>
+    <div class="container" ng-show="currentSection == 'examples'">
+        <div class="row top-16">
+            <div class="col-sm-12 col-md-4">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">Screenshots</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Responsive Web Pages</h4>
+                        <p class="card-text">Here are some examples...</p>
+                        <img class="thumbnail" src="screenshots/gotrack-iphone-se.png">
+                        <img class="thumbnail" src="screenshots/gotrack-desktop.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-show="currentSection == 'opinions'">
+        <div class="jumbotron">
+            <h1>Section: {{ currentSection }}</h1>
+            <h1>Under construction...</h1>
+        </div>
+    </div>
+    <div class="container" ng-show="currentSection == 'history'">
+        <div class="jumbotron">
+            <h1>Section: {{ currentSection }}</h1>
+            <h1>Under construction...</h1>
+        </div>
+    </div>
 </body>
 </html>
